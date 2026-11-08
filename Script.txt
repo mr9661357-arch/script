@@ -341,8 +341,6 @@ var qxOf=0
 var qxW=30
 var qxT
 var qxG
-var qxD
-var qxR
 var sbR
 var qxK=0
 var qxM=0
@@ -355,20 +353,11 @@ var qxq=0
 var qxi=0
 var qxv=0
 var qxOp=0
+var qxMsg=0
+var qxSp=4
 var opW="MAIS QUE"
-var qyTh
-var qyRd
 var qyBr
-var qyNd
 var qyLb
-var QD=[]
-var qyCl="#8793A3"
-var qyCh=":"
-var qyN=0
-var qyI=0
-var qyJ=0
-var qyX=0
-var qyV=0
 ?Zak>2
  Zak=2
 ?Zal>2
@@ -1660,32 +1649,13 @@ func qyTr(i,x,y,w,h)
  i.dock=top_right
  ps(i,x,y,w,h)
 func qyPos()
- qyTr(qyTh,qxW,8,1,5)
- qyTr(qyRd,qxW+1,10,3,1)
  qyTr(qyBr,qxW+4,9,7,3)
- qyTr(qyNd,qxW+11,10,4,1)
- qyTr(qyLb,qxW+4,12,8,1)
+ qyTr(qyLb,qxW+4,12,9,1)
  qyLb.text="EXPANDIR"
  qyBr.text="<<"
- qyRd.text="==="
  ?qxOn=1
   qyBr.text=">>"
-  qyRd.text="="
   qyLb.text="ENCOLHER"
- qyNd.text="<---"
-func qyAn()
- qyN=tk/8
- for qyI=0..QD.Count()-1
-  t2=QD[qyI]
-  qyX=(qyN+qyI)%4
-  qyCh=":"
-  ?qyX=0
-   qyCh="*"
-  :?qyX=1
-   qyCh="+"
-  :?qyX=2
-   qyCh="."
-  t2.text=qyCh
 func qxL()
  qxOf=0
  qxW=30
@@ -2107,7 +2077,7 @@ func qxC(n,l,c,on)
  px=1
  ?n%2=0
   px=14
- py=3+4*((n-1)/2)
+ py=3+qxSp*((n-1)/2)
  qxB(n,l,c,px,py,12)
  ?on=0
   lB.bcolor=cZ
@@ -2126,9 +2096,9 @@ func qxHd(t)
  qxT.text=qxs+" "+t+" "+qxs
 func qx1()
  qxHd("TOOLS")
- qxG.text="Slots e atalhos gerais"
+ qxG.text="Atalhos rápidos: slots, HUD, pet, skin"
  ?pEE=0&pHE=0
-  qxG.text="Slots e atalhos (potion off)"
+  qxG.text="Potion OFF. POTION liga os dois"
  ?smg>0
   qxG.text="Slot "+smg+" ok! Veja ao lado"
  for qn=1..4
@@ -2180,6 +2150,8 @@ func qx2()
   qxG.text="Copiar: toque num item"
  :?cMo=2
   qxG.text="Toque em PASTE p/ colar"
+ ?qxMsg=1
+  qxG.text="Selecione um item"
  lb="+ ADD BLOCK"
  ?D>0
   lb="+ ADD ITEM"
@@ -2218,14 +2190,6 @@ func qx2()
  :
   qxC(7,"MOVE UP",cZ,0)
   qxC(8,"MOVE DOWN",cZ,0)
- ?gm=0&D=0
-  qxC(9,"SAVE SLOTS",cY,1)
- :
-  qxC(9,"SAVE SLOTS",cZ,0)
- ?H>0|cMo>0
-  qxC(10,"DESELECT",cA,1)
- :
-  qxC(10,"DESELECT",cZ,0)
 func qx3()
  rd(cr)
  eqM=0
@@ -2234,9 +2198,10 @@ func qx3()
  ?eqM=1
   qxHd("EQUIP TOOLS")
   qxG.text="Escolha estrelas e a mão"
-  for qn=1..8
+  qxSp=3
+  for qn=1..9
    qxv=qn-1
-   ?qn=8
+   ?qn=9
     qxv=10
    lb="*"+qxv
    ?qxv=0
@@ -2246,38 +2211,28 @@ func qx3()
     en=1
    qxC(qn,lb,cY,en)
   ?rHd=3
-   qxC(9,"HAND: LEFT",cZ,0)
-   qxC(10,"HAND: RIGHT",cZ,0)
+   qxC(10,"HAND: LEFT",cZ,0)
+   qxC(11,"HAND: RIGHT",cZ,0)
   :
    en=0
    ?rHd=1
     en=1
-   qxC(9,"HAND: LEFT",cB,en)
+   qxC(10,"HAND: LEFT",cB,en)
    en=0
    ?rHd=2
     en=1
-   qxC(10,"HAND: RIGHT",cB,en)
- :
-  qxHd("ITEM TOOLS")
-  qxG.text="Escolha loadout e poder"
-  for qn=1..6
-   en=0
-   ?rL=qn
-    en=1
-   qxC(qn,"LOAD "+qn,cT,en)
-  en=0
-  ?rL=0&rE=0
-   en=1
-  qxC(7,"NO LOAD",cW,en)
+   qxC(11,"HAND: RIGHT",cB,en)
   lb="DELETE"
   ?qxDl=cr
    lb="CONFIRM?"
-  qxC(8,lb,cR,1)
-  qxC(9,"POWER L",cP,rPw%2)
-  en=0
-  ?rPw>1
-   en=1
-  qxC(10,"POWER R",cP,en)
+  qxC(12,lb,cR,1)
+ :
+  qxHd("ITEM TOOLS")
+  qxG.text="Loadout e poder: botões ao lado"
+  lb="DELETE"
+  ?qxDl=cr
+   lb="CONFIRM?"
+  qxC(1,lb,cR,1)
 func qx4()
  qxMd()
  cLb()
@@ -2307,15 +2262,22 @@ func qx4()
     ?rV=qn
      en=1
     qxC(qn,lb,crC,en)
-  :
-   qxC(1,"-1",cB,1)
-   qxC(2,"+1",cB,1)
-   qxC(3,"-5",cB,1)
-   qxC(4,"+5",cB,1)
-   qxC(5,"-25",cB,1)
+  :?A=3
+   qxC(1,"-25",cB,1)
+   qxC(2,"-5",cB,1)
+   qxC(3,"-1",cB,1)
+   qxC(4,"+1",cB,1)
+   qxC(5,"+5",cB,1)
    qxC(6,"+25",cB,1)
    qxC(7,"MIN",cW,1)
    qxC(8,"MAX",cW,1)
+  :
+   qxC(1,"-10",cB,1)
+   qxC(2,"-1",cB,1)
+   qxC(3,"+1",cB,1)
+   qxC(4,"+10",cB,1)
+   qxC(5,"MIN",cW,1)
+   qxC(6,"MAX",cW,1)
   qyOp(rO)
   ?qxOp=1
    qxC(9,opW,cB,1)
@@ -2347,62 +2309,16 @@ func qx5()
   qxC(10,"HP=50% MAX",cH,1)
  :
   qxC(10,"HP=50% MAX",cZ,0)
-func qx6()
- qxHd("NAVEGAR")
- qxG.text="Atalhos desta tela"
- en=0
- ?nw=0&chT=0
-  en=1
- qxC(1,"BLOCK LIST",cT,en)
- qxC(2,"ITEM",cO,en)
- qxC(3,"CONDITION",cG,en)
- qxC(4,"LOADOUT",cP,en)
- qxC(5,"EQUIP",cY,en)
- qxC(6,"BACK",cA,1)
- qxC(7,"SETTINGS",cB,en)
- qxC(8,"CLOSE MENU",cR,1)
- qxC(9,"GENERAL",cH,en)
- qxC(10,"SAVE SLOTS",cY,en)
- ?en=0
-  qxG.text="Termine a edicao p/ navegar"
- :
-  qxG.text="Atalhos: pule de tela rapido"
-func qx7()
- qxHd("ATALHOS")
- qxG.text="Abrir os editores direto"
- qxC(1,"EDIT COMBAT","#DC143C",1)
- qxC(2,"EDIT RANGED","#FFFF00",1)
- qxC(3,"EDIT HYBRID",cH,1)
- qxC(4,"EDIT DEFENSE",cD,1)
- qxC(5,"EDIT CUSTOM",cT,1)
- qxC(6,"SAVE SLOTS",cY,1)
- qxC(7,"BOSS 1 MODE",cP,bAu)
- qxC(8,"BOSS 2 MODE",cX,bAd)
- lb="AAC: OFF"
- ?aac=1
-  lb="AAC: ON"
- qxC(9,lb,cG,aac)
- lb="DEFENSE: OFF"
- ?dfE=1
-  lb="DEFENSE: ON"
- qxC(10,lb,cD,dfE)
 func qx8()
- qxHd("DODGE TOOLS")
- qxG.text="Mapas do modo "+dMN+" (toque)"
- for qn=1..4
-  nm("forest,halls,mine,deadwood",qn)
-  dK=string.Format("dodge{0}_{1}",sDM,tN)
-  en=storage.Get(dK,0)
-  nm("FOREST,HALLS,MINE,DEADWD",qn)
-  qxC(qn,tN,cB,en)
- qxC(5,"ALL ON",cG,1)
- qxC(6,"ALL OFF",cR,1)
- qxC(7,"INVERT",cP,1)
- qxC(8,"COPY TO ALL",cY,1)
- qxC(9,"MODE: "+dMN,cH,1)
- qxC(10,"BACK",cA,1)
+ qxHd("DODGE BULK")
+ qxG.text="Modo "+dMN+": acoes em massa"
+ qxC(1,"ALL ON",cG,1)
+ qxC(2,"ALL OFF",cR,1)
+ qxC(3,"INVERT",cP,1)
+ qxC(4,"COPY TO ALL",cY,1)
+ qxC(5,"BACK",cA,1)
 func qx9()
- qxHd("SLOT TOOLS")
+ qxHd("SLOT CLEAR")
  qxG.text="Limpar (toque 2x confirma)"
  for qn=1..4
   ix=storage.Get("s"+qn+"m0",0)
@@ -2415,33 +2331,6 @@ func qx9()
    en=1
    cl=cR
   qxC(qn,lb,cl,en)
- lb="MODE: SAVE"
- ?Zan=0
-  lb="MODE: LOAD"
- qxC(5,lb,cB,1)
- qxC(6,"BACK TO LIST",cA,1)
-func qxA()
- qxHd("SKIN TOOLS")
- qxG.text="Troque skin, asas e pet"
- en=0
- ?skn=1
-  en=1
- qxC(1,"SKIN HAYA",cB,en)
- en=0
- ?skn=2
-  en=1
- qxC(2,"SKIN BRT",cV,en)
- nm("SLOW,NORMAL",Zak)
- qxC(3,"HAYA: "+tN,cB,1)
- nm("SLOW,NORMAL",Zal)
- qxC(4,"BRT: "+tN,cV,1)
- lb="PET: OFF"
- ?Zao=1
-  lb="PET: ON"
- qxC(5,lb,cP,Zao)
- qxC(6,"WINGS SLOW",cH,1)
- qxC(7,"WINGS NORMAL",cH,1)
- qxC(8,"BACK",cA,1)
 func qxMn()
  for d=0..11
   t2=XB[d]
@@ -2449,6 +2338,7 @@ func qxMn()
  qxT.text=""
  qxG.text=""
  qxK=0
+ qxSp=4
  ?qxOn=1&pg>0
   qxK=1
   ?pg=13
@@ -2461,14 +2351,10 @@ func qxMn()
    qxK=5
   :?pg=6
    qxK=8
-  :?pg=1|pg=2|pg=22
-   qxK=7
   :?pg=27
    qxK=9
-  :?pg=20
-   qxK=10
-  :?pg=16|pg=17|pg=19|pg=24|pg=25|pg=26
-   qxK=6
+  :?pg=1|pg=2|pg=20|pg=22|pg=16|pg=17|pg=19|pg=24|pg=25|pg=26
+   qxK=0
  ?qxK=1
   qx1()
  :?qxK=2
@@ -2479,21 +2365,16 @@ func qxMn()
   qx4()
  :?qxK=5
   qx5()
- :?qxK=6
-  qx6()
- :?qxK=7
-  qx7()
  :?qxK=8
   qx8()
  :?qxK=9
   qx9()
- :?qxK=10
-  qxA()
 func qAc(b)
  ab=1
  qxQ=qxDl
  qxDl=0
  qxN=0
+ qxMsg=0
  for d=0..11
   t2=XB[d]
   ?b=t2
@@ -2552,55 +2433,39 @@ func qAc(b)
    :?qxN=6
     ?H>0
      qxDe(H)
+    :
+     qxMsg=1
+     G.text="Selecione um item"
    :?qxN=7
     ?H>0
      mvS(0-1)
    :?qxN=8
     ?H>0
      mvS(1)
-   :?qxN=9
-    ?gm=0&D=0
-     pg=27
-     smg=0
-   :?qxN=10
-    H=0
-    cMo=0
-    lkM=0
   :?qxK=3
    rd(cr)
    eqM=0
    ?rE=5&eqV=1
     eqM=1
    ?eqM=1
-    ?qxN<=8
+    ?qxN<=9
      qxv=qxN-1
-     ?qxN=8
+     ?qxN=9
       qxv=10
      rSt=qxv
      wr(cr)
-    :?qxN=9
+    :?qxN=10
      ?rHd<3
       rHd=1
       wr(cr)
-    :?qxN=10
+    :?qxN=11
      ?rHd<3
       rHd=2
       wr(cr)
-   :
-    ?qxN<=6
-     rL=qxN
-     rE=0
-     wr(cr)
-    :?qxN=7
-     rL=0
-     rE=0
-     wr(cr)
-    :?qxN=8
+    :?qxN=12
      qxDe(cr)
-    :?qxN=9
-     tgP(1)
-    :?qxN=10
-     tgP(2)
+   :?qxN=1
+    qxDe(cr)
   :?qxK=4
    qxMd()
    ?qxM=3
@@ -2622,22 +2487,35 @@ func qAc(b)
    :?qxM=1
     ?qxN<=mxv
      qxSv(1,qxN)
-   :
+   :?A=3
     ?qxN=1
-     qxSv(0,0-1)
-    :?qxN=2
-     qxSv(0,1)
-    :?qxN=3
-     qxSv(0,0-5)
-    :?qxN=4
-     qxSv(0,5)
-    :?qxN=5
      qxSv(0,0-25)
+    :?qxN=2
+     qxSv(0,0-5)
+    :?qxN=3
+     qxSv(0,0-1)
+    :?qxN=4
+     qxSv(0,1)
+    :?qxN=5
+     qxSv(0,5)
     :?qxN=6
      qxSv(0,25)
     :?qxN=7
      qxSv(2,0)
     :?qxN=8
+     qxSv(3,0)
+   :
+    ?qxN=1
+     qxSv(0,0-10)
+    :?qxN=2
+     qxSv(0,0-1)
+    :?qxN=3
+     qxSv(0,1)
+    :?qxN=4
+     qxSv(0,10)
+    :?qxN=5
+     qxSv(2,0)
+    :?qxN=6
      qxSv(3,0)
   :?qxK=5
    ?qxN=1
@@ -2664,85 +2542,26 @@ func qAc(b)
     ?maxhp>1
      pHT=maxhp/2
      qyPt(0,0)
-  :?qxK=6
-   ?qxN=8
-    H=0
-    lkM=0
-    cMo=0
-    nw=0
-    chT=0
-    pg=0
-   :?qxN=6
-    bk()
-   :?nw=0&chT=0
-    ?qxN=1
-     pg=13
-    :?qxN=2
-     pg=14
-    :?qxN=3
-     pg=18
-    :?qxN=4
-     pg=19
-    :?qxN=5
-     pg=24
-    :?qxN=7
-     pg=2
-    :?qxN=9
-     pg=22
-    :?qxN=10
-     opN("q","CUSTOM",2,0)
-     pg=27
-     smg=0
-  :?qxK=7
-   ?qxN=1
-    opN("a","COMBAT",22,1)
-   :?qxN=2
-    opN("r","RANGED",22,1)
-   :?qxN=3
-    opN("h","HYBRID",22,1)
-   :?qxN=4
-    opN("d","DEFENSE",22,1)
-   :?qxN=5
-    opN("q","CUSTOM",2,0)
-   :?qxN=6
-    opN("q","CUSTOM",2,0)
-    pg=27
-    smg=0
-   :?qxN=7
-    pk=13
-    pg=17
-   :?qxN=8
-    pk=14
-    pg=17
-   :?qxN=9
-    tAA()
-   :?qxN=10
-    tDf()
   :?qxK=8
-   ?qxN<=4
-    nm("forest,halls,mine,deadwood",qxN)
-    tDM(tN)
-   :?qxN=5|qxN=6
+   ?qxN=1|qxN=2
     for qn=1..4
      nm("forest,halls,mine,deadwood",qn)
      dK=string.Format("dodge{0}_{1}",sDM,tN)
-     ss(dK,6-qxN)
-   :?qxN=7
+     ss(dK,2-qxN)
+   :?qxN=3
     for qn=1..4
      nm("forest,halls,mine,deadwood",qn)
      dK=string.Format("dodge{0}_{1}",sDM,tN)
      ss(dK,1-storage.Get(dK,0))
-   :?qxN=8
+   :?qxN=4
     for qm=1..4
      for qn=1..4
       nm("forest,halls,mine,deadwood",qn)
       dK=string.Format("dodge{0}_{1}",sDM,tN)
-      qyX=storage.Get(dK,0)
+      qxi=storage.Get(dK,0)
       dK=string.Format("dodge{0}_{1}",qm,tN)
-      ss(dK,qyX)
-   :?qxN=9
-    pg=5
-   :?qxN=10
+      ss(dK,qxi)
+   :?qxN=5
     bk()
   :?qxK=9
    ?qxN<=4
@@ -2753,36 +2572,6 @@ func qAc(b)
       smg=0
      :
       qxDl=9000+qxN
-   :?qxN=5
-    Zan=1-Zan
-    smg=0
-   :?qxN=6
-    bk()
-  :?qxK=10
-   ?qxN<=2
-    skn=qxN
-    ss("skinSel",skn)
-   :?qxN=3
-    Zak=Zak%2+1
-    ss("wingSpd1",Zak)
-   :?qxN=4
-    Zal=Zal%2+1
-    ss("wingSpd2",Zal)
-   :?qxN=5
-    Zao=1-Zao
-    ss("petOn",Zao)
-   :?qxN=6
-    Zak=1
-    Zal=1
-    ss("wingSpd1",Zak)
-    ss("wingSpd2",Zal)
-   :?qxN=7
-    Zak=2
-    Zal=2
-    ss("wingSpd1",Zak)
-    ss("wingSpd2",Zal)
-   :?qxN=8
-    bk()
 func uMn()
  for d=0..11
   t2=BT[d]
@@ -2798,15 +2587,6 @@ func uMn()
   en=0
  sMD(en)
  sV(cfB,1-en)
- ?qxOn=0
-  sV(qxD,0)
-  sV(qxR,0)
- qyV=0
- ?en=1&qxOn=1
-  qyV=1
- for qyI=0..QD.Count()-1
-  t2=QD[qyI]
-  sV(t2,qyV)
  ?pg=1
   tT="CONFIGURE"
   G.text="Ligue ou desligue funções"
@@ -3198,7 +2978,6 @@ func cUI()
  DG.Clear()
  DK.Clear()
  DKC.Clear()
- QD.Clear()
  hdB=ui.AddPanel()
  tp(hdB,1,1,27,6)
  hdB.color="#000000"
@@ -3295,20 +3074,6 @@ func cUI()
  dcd(14,"o",1)
  dcd(17,"*",0)
  dcd(21,"+",2)
- dc(mP,1,28,1,2,21,"#3A4552","")
- qxD=t2
- dc(mP,1,30,1,27,21,"#0E1A2B","")
- qxR=t2
- for qyI=0..4
-  for qyJ=0..3
-   ?qyI*4+qyJ<19
-    t2=ui.AddText()
-    tp(t2,13,3+qyI*4+qyJ,1,1)
-    t2.text=":"
-    t2.color=qyCl
-    t2.visible=false
-    mP.Add(t2)
-    QD.Add(t2)
  mTi=ui.AddText()
  tp(mTi,1,1,26,2)
  mTi.color=cH
@@ -3338,15 +3103,6 @@ func cUI()
   t2.visible=false
   mP.Add(t2)
   XB.Add(t2)
- qyTh=ui.AddPanel()
- qyTh.visible=false
- DC.Add(qyTh)
- qyRd=ui.AddText()
- qyRd.visible=false
- DC.Add(qyRd)
- qyNd=ui.AddText()
- qyNd.visible=false
- DC.Add(qyNd)
  qyLb=ui.AddText()
  qyLb.visible=false
  DC.Add(qyLb)
@@ -3492,10 +3248,6 @@ func thm()
   mS2.color="#8B0000"
   mT0.color="#B03A2E"
   dkL="#E74C3C,#8B0000,#E67E22"
-  qyCl="#8B0000"
-  qyTh.color="#E74C3C"
-  qyRd.color="#B03A2E"
-  qyNd.color="#E67E22"
   qyLb.color="#E67E22"
   qyBr.bcolor="#C0392B"
   qyBr.hcolor="#C0392B"
@@ -3516,10 +3268,6 @@ func thm()
   mS2.color="#BFE9FF"
   mT0.color="#BFE9FF"
   dkL="#BFE9FF,#8793A3,#F1C40F"
-  qyCl="#8793A3"
-  qyTh.color="#F1C40F"
-  qyRd.color="#BFE9FF"
-  qyNd.color="#BFE9FF"
   qyLb.color="#8793A3"
   qyBr.bcolor=cT
   qyBr.hcolor=cT
@@ -3531,9 +3279,6 @@ func thm()
   dkI=DKC[dk2]
   t2=DK[dk2]
   t2.color=dkA[dkI]
- for qyI=0..QD.Count()-1
-  t2=QD[qyI]
-  t2.color=qyCl
  tcO=0-1
 func qyPl()
  qyBr.bcolor=cT
@@ -3661,8 +3406,6 @@ tk=totaltime
  prt()
  ?pg=13&Zae>0&tk%10=0
   blk()
- ?qxOn=1&pg>0&tk%8=0
-  qyAn()
 ?bAu=1|bAd=1
  ?foe=boss&bcs=0
   Zbk=md
