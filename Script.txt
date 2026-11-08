@@ -335,6 +335,26 @@ var fq=0
 var fy=0
 var fx=0
 var fk=0
+var XB=[]
+var qxOn=storage.Get("menuExp",0)
+var qxOf=0
+var qxW=30
+var qxT
+var qxG
+var qxD
+var qxR
+var sbR
+var qxK=0
+var qxM=0
+var qxN=0
+var qxDl=0
+var qxQ=0
+var qxc=""
+var qxs=""
+var qxq=0
+var qxi=0
+var qxv=0
+var qxOp=0
 ?Zak>2
  Zak=2
 ?Zal>2
@@ -439,7 +459,7 @@ func mX(n,l,c,x,y,w)
  lB.bcolor=c
  lB.w=w
  lB.h=3
- lB.x=x
+ lB.x=x+qxOf
  lB.y=y
  lB.visible=true
 func mW(n,l,c,y)
@@ -1602,8 +1622,37 @@ func blk()
  t2=BT[ix]
  t2.tcolor=cl
  t2.bcolor=cl
+func qxL()
+ qxOf=0
+ qxW=30
+ ?qxOn=1
+  qxOf=30
+  qxW=60
+ mF.w=qxW
+ mP.w=qxW-2
+ mS2.x=qxW-1
+ mB1.w=qxW
+ mB2.w=qxW
+ mT0.w=qxW-2
+ mT0.text=":.:.:.:.:.:.:.:.:.:.:.:.:.:."
+ ?qxOn=1
+  mT0.text=mT0.text+mT0.text+":."
+ sbR.x=qxW-3
+ for dk2=0..DK.Count()-1
+  ?dk2%2=1
+   t2=DK[dk2]
+   t2.x=qxW-3
+ mTi.x=1+qxOf
+ G.x=1+qxOf
+ thO=0-1
+ ab=1
+func qxTg()
+ qxOn=1-qxOn
+ ss("menuExp",qxOn)
+ qxL()
 func mAc(b)
  ab=1
+ qxDl=0
  sl=0
  for d=0..11
   t2=BT[d]
@@ -1628,6 +1677,8 @@ func mAc(b)
    tB(1)
   :?sl=6
    tB(2)
+  :?sl=9
+   qxTg()
  :?pg=2
   ?sl=1
    pg=5
@@ -1910,6 +1961,476 @@ func gGr()
    cl="#FFA500"
   ?gcN>2
    lb="["+gcN+"] "+lb
+func qxBd()
+ mxv=99
+ mnv=1
+ lv2=0
+ ?A=1&z=4
+  mxv=7
+  lv2=1
+ :?A=2&z=3
+  mxv=5
+  lv2=1
+ :?A=2&z=2
+  mxv=3
+  lv2=1
+ :?A=5
+  mxv=6
+  lv2=1
+ :?A=7
+  mxv=2
+  lv2=1
+ :?A=3
+  mxv=100
+ ?A=3|A=4|A=8
+  mnv=0
+ fAn()
+ ?fa=1
+  mxv=999
+  mnv=0
+  lv2=0
+func qxOk()
+ fAn()
+ qxOp=0
+ ?fa=1|A=1&z>1&z<4|A=3|A=4|A=8
+  qxOp=1
+func qxMd()
+ rd(cr)
+ qxBd()
+ qxOk()
+ qxM=2
+ ?A=2&z=1|A=6
+  qxM=3
+ :?lv2=1
+  qxM=1
+func qxSv(m,v)
+ rd(cr)
+ qxBd()
+ ?m=1
+  rV=v
+ :?m=2
+  rV=mnv
+ :?m=3
+  rV=mxv
+ :
+  rV=rV+v
+ ?rV>mxv
+  rV=mxv
+ ?rV<mnv
+  rV=mnv
+ wr(cr)
+func qxDe(id)
+ ?qxQ=id
+  cr=id
+  Qf()
+ :
+  qxDl=id
+func qxB(n,l,c,x,y,w)
+ ?string.Size(l)>w
+  l=string.Sub(l,0,w)
+ n=n-1
+ lB=XB[n]
+ lB.text=l
+ lB.tcolor=c
+ lB.bcolor=c
+ lB.w=w
+ lB.h=3
+ lB.x=x
+ lB.y=y
+ lB.visible=true
+func qxC(n,l,c,on)
+ px=1
+ ?n%2=0
+  px=14
+ py=3+4*((n-1)/2)
+ qxB(n,l,c,px,py,12)
+ ?on=0
+  lB.bcolor=cZ
+func qxHd(t)
+ qxc="~"
+ ?skn=2
+  qxc="^"
+ qxq=(24-string.Size(t))/2
+ ?qxq<1
+  qxq=1
+ ?qxq>9
+  qxq=9
+ qxs=""
+ for qxi=1..qxq
+  qxs=qxs+qxc
+ qxT.text=qxs+" "+t+" "+qxs
+func qx1()
+ qxHd("QUICK")
+ qxG.text="Atalhos do HUD"
+ en=0
+ ?md=1
+  en=1
+ qxC(1,"COMBAT","#DC143C",en)
+ cl="#DC143C"
+ ?cbS=2
+  cl=cX
+ qxC(2,"C.STYLE: "+cbS,cl,1)
+ en=0
+ ?md2=5
+  en=1
+ qxC(3,"RANGED","#FFFF00",en)
+ lb="R: WAND"
+ cl="#FFFF00"
+ ?rs2=2
+  lb="R: BOW"
+  cl="#CC7000"
+ qxC(4,lb,cl,1)
+ en=0
+ ?md=2
+  en=1
+ qxC(5,"HYBRID",cH,en)
+ lb="H: WAND"
+ cl=cH
+ ?rgS=2
+  lb="H: BOW"
+  cl=cD
+ qxC(6,lb,cl,1)
+ en=0
+ ?md2=4
+  en=1
+ qxC(7,"CUSTOM",cT,en)
+ ?md=0&md2=0
+  qxC(8,"ALL OFF",cZ,0)
+ :
+  qxC(8,"ALL OFF",cR,1)
+ lb="AAC: OFF"
+ ?aac=1
+  lb="AAC: ON"
+ qxC(9,lb,cG,aac)
+ lb="DEFENSE: OFF"
+ ?dfE=1
+  lb="DEFENSE: ON"
+ qxC(10,lb,cD,dfE)
+func qx2()
+ qxHd("ADD + TOOLS")
+ qxG.text="Selecione um item"
+ ?H>0
+  qxG.text="Item #"+(H-lvB)+" selecionado"
+ ?cMo=1
+  qxG.text="Copiar: toque num item"
+ :?cMo=2
+  qxG.text="Toque em PASTE p/ colar"
+ lb="+ ADD BLOCK"
+ ?D>0
+  lb="+ ADD ITEM"
+ ?lN<lmx
+  qxC(1,lb,cT,1)
+ :
+  qxC(1,lb,cZ,0)
+ ?lN<lmx&D>0&D<1000000
+  qxC(2,"+ SUB BLOCK",cV,1)
+ :
+  qxC(2,"+ SUB BLOCK",cZ,0)
+ qxC(3,"COPY",cB,1)
+ en=0
+ ?cMo=2
+  pOk()
+  ?ix=1&lN<lmx
+   en=1
+ ?en=1
+  qxC(4,"PASTE",cG,1)
+ :
+  qxC(4,"PASTE",cZ,0)
+ ?H>0&lN<lmx
+  qxC(5,"DUPLICATE",cH,1)
+ :
+  qxC(5,"DUPLICATE",cZ,0)
+ ?H>0
+  lb="DELETE"
+  ?qxDl=H
+   lb="CONFIRM?"
+  qxC(6,lb,cR,1)
+ :
+  qxC(6,"DELETE",cZ,0)
+ ?H>0
+  qxC(7,"MOVE UP",cB,1)
+  qxC(8,"MOVE DOWN",cB,1)
+ :
+  qxC(7,"MOVE UP",cZ,0)
+  qxC(8,"MOVE DOWN",cZ,0)
+ ?gm=0&D=0
+  qxC(9,"SAVE SLOTS",cY,1)
+ :
+  qxC(9,"SAVE SLOTS",cZ,0)
+ ?H>0|cMo>0
+  qxC(10,"DESELECT",cA,1)
+ :
+  qxC(10,"DESELECT",cZ,0)
+func qx3()
+ rd(cr)
+ eqM=0
+ ?rE=5&eqV=1
+  eqM=1
+ ?eqM=1
+  qxHd("EQUIP TOOLS")
+  qxG.text="Estrelas e mao"
+  for qn=1..8
+   qxv=qn-1
+   ?qn=8
+    qxv=10
+   lb="*"+qxv
+   ?qxv=0
+    lb="ANY STAR"
+   en=0
+   ?rSt=qxv
+    en=1
+   qxC(qn,lb,cY,en)
+  ?rHd=3
+   qxC(9,"HAND: LEFT",cZ,0)
+   qxC(10,"HAND: RIGHT",cZ,0)
+  :
+   en=0
+   ?rHd=1
+    en=1
+   qxC(9,"HAND: LEFT",cB,en)
+   en=0
+   ?rHd=2
+    en=1
+   qxC(10,"HAND: RIGHT",cB,en)
+ :
+  qxHd("ITEM TOOLS")
+  qxG.text="Loadout e poder"
+  for qn=1..6
+   en=0
+   ?rL=qn
+    en=1
+   qxC(qn,"LOAD "+qn,cT,en)
+  en=0
+  ?rL=0&rE=0
+   en=1
+  qxC(7,"NO LOAD",cW,en)
+  lb="DELETE"
+  ?qxDl=cr
+   lb="CONFIRM?"
+  qxC(8,lb,cR,1)
+  qxC(9,"POWER L",cP,rPw%2)
+  en=0
+  ?rPw>1
+   en=1
+  qxC(10,"POWER R",cP,en)
+func qx4()
+ qxMd()
+ cLb()
+ qxHd("SET VALUE")
+ qxG.text=crL
+ ?qxM=3
+  qxC(1,"CHANGE TYPE",cV,1)
+  lb="DELETE"
+  ?qxDl=cr
+   lb="CONFIRM?"
+  qxC(2,lb,cR,1)
+ :
+  ?qxM=1
+   for qn=1..mxv
+    lb="VALUE "+qn
+    ?A=1&z=4|A=2&z=3
+     nm(sTy,qn)
+     lb=tN
+    :?A=5
+     nm(sMp,qn)
+     lb=tN
+    :?A=2&z=2
+     lb="PHASE "+qn
+    :?A=7
+     lb="STYLE "+qn
+    en=0
+    ?rV=qn
+     en=1
+    qxC(qn,lb,crC,en)
+  :
+   qxC(1,"MIN",cB,1)
+   qxC(2,"MAX",cB,1)
+   qxC(3,"-5",cB,1)
+   qxC(4,"+5",cB,1)
+   qxC(5,"-25",cB,1)
+   qxC(6,"+25",cB,1)
+   qxC(7,"-100",cB,1)
+   qxC(8,"+100",cB,1)
+  sOL(rO)
+  ?qxOp=1
+   qxC(9,"OP: "+opL,cB,1)
+  :
+   qxC(9,"OP: "+opL,cZ,0)
+  lb="DELETE"
+  ?qxDl=cr
+   lb="CONFIRM?"
+  qxC(10,lb,cR,1)
+func qxMn()
+ for d=0..11
+  t2=XB[d]
+  t2.visible=false
+ qxT.text=""
+ qxG.text=""
+ qxK=0
+ ?qxOn=1&pg>0
+  qxK=1
+  ?pg=13
+   qxK=2
+  :?pg=14
+   qxK=3
+  :?pg=18
+   qxK=4
+ ?qxK=1
+  qx1()
+ :?qxK=2
+  qx2()
+ :?qxK=3
+  qx3()
+ :?qxK=4
+  qx4()
+func qAc(b)
+ ab=1
+ qxQ=qxDl
+ qxDl=0
+ qxN=0
+ for d=0..11
+  t2=XB[d]
+  ?b=t2
+   qxN=d+1
+ ?qxN>0
+  ?qxK=1
+   ?qxN=1
+    stC(0)
+   :?qxN=2
+    tCS(0)
+   :?qxN=3
+    stR(0)
+   :?qxN=4
+    tRS(0)
+   :?qxN=5
+    stH(0)
+   :?qxN=6
+    tHS(0)
+   :?qxN=7
+    stU(0)
+   :?qxN=8
+    md=0
+    md2=0
+    svM()
+   :?qxN=9
+    tAA()
+   :?qxN=10
+    tDf()
+  :?qxK=2
+   lnC()
+   ?qxN=1
+    Qb(0)
+   :?qxN=2
+    ?D>0&D<1000000
+     Qb(1)
+   :?qxN=3
+    ?H>0
+     Qg(H)
+    :
+     cMo=1
+   :?qxN=4
+    ?cMo=2
+     pOk()
+     ?ix=1&lN<lmx
+      Qh()
+   :?qxN=5
+    ?H>0&lN<lmx
+     Qg(H)
+     pOk()
+     ?ix=1
+      Qh()
+     :
+      cMo=0
+   :?qxN=6
+    ?H>0
+     qxDe(H)
+   :?qxN=7
+    ?H>0
+     mvS(0-1)
+   :?qxN=8
+    ?H>0
+     mvS(1)
+   :?qxN=9
+    ?gm=0&D=0
+     pg=27
+     smg=0
+   :?qxN=10
+    H=0
+    cMo=0
+    lkM=0
+  :?qxK=3
+   rd(cr)
+   eqM=0
+   ?rE=5&eqV=1
+    eqM=1
+   ?eqM=1
+    ?qxN<=8
+     qxv=qxN-1
+     ?qxN=8
+      qxv=10
+     rSt=qxv
+     wr(cr)
+    :?qxN=9
+     ?rHd<3
+      rHd=1
+      wr(cr)
+    :?qxN=10
+     ?rHd<3
+      rHd=2
+      wr(cr)
+   :
+    ?qxN<=6
+     rL=qxN
+     rE=0
+     wr(cr)
+    :?qxN=7
+     rL=0
+     rE=0
+     wr(cr)
+    :?qxN=8
+     qxDe(cr)
+    :?qxN=9
+     tgP(1)
+    :?qxN=10
+     tgP(2)
+  :?qxK=4
+   qxMd()
+   ?qxM=3
+    ?qxN=1
+     ?A=4|A=8
+      chT=1
+      pk=4
+      pg=17
+     :
+      pg=16
+    :?qxN=2
+     qxDe(cr)
+   :?qxN=9
+    ?qxOp=1
+     rO=rO%3+1
+     wr(cr)
+   :?qxN=10
+    qxDe(cr)
+   :?qxM=1
+    ?qxN<=mxv
+     qxSv(1,qxN)
+   :
+    ?qxN=1
+     qxSv(2,0)
+    :?qxN=2
+     qxSv(3,0)
+    :?qxN=3
+     qxSv(0,0-5)
+    :?qxN=4
+     qxSv(0,5)
+    :?qxN=5
+     qxSv(0,0-25)
+    :?qxN=6
+     qxSv(0,25)
+    :?qxN=7
+     qxSv(0,0-100)
+    :?qxN=8
+     qxSv(0,100)
 func uMn()
  for d=0..11
   t2=BT[d]
@@ -1925,6 +2446,9 @@ func uMn()
   en=0
  sMD(en)
  sV(cfB,1-en)
+ ?qxOn=0
+  sV(qxD,0)
+  sV(qxR,0)
  ?pg=1
   tT="CONFIGURE"
   G.text="Opção"
@@ -1933,6 +2457,12 @@ func uMn()
   sT(4,"DEFENSE",cD,dfE)
   sT(5,"BOSS 1",cP,bAu)
   sT(6,"BOSS 2",cX,bAd)
+  lb="EXPAND: ON"
+  ?qxOn=0
+   lb="EXPAND: OFF"
+  mW(9,lb,cP,15)
+  ?qxOn=0
+   lB.bcolor=cZ
   eb()
  :?pg=2
   tT="SETTINGS"
@@ -2288,6 +2818,7 @@ func uMn()
    elC(pn)
    C(pn,tN,cl)
   eb()
+ qxMn()
  tq=(24-string.Size(tT))/2
  ?tq<1
   tq=1
@@ -2308,6 +2839,7 @@ func cUI()
  ui.Clear()
  DC.Clear()
  BT.Clear()
+ XB.Clear()
  DG.Clear()
  DK.Clear()
  DKC.Clear()
@@ -2398,6 +2930,7 @@ func cUI()
  DC.Add(mP)
  dc(mP,1,0,1,1,21,"#1E2733","")
  dc(mP,1,27,1,1,21,"#1E2733","")
+ sbR=t2
  dc(mP,0,0,0,28,1,"#3A4552",":.:.:.:.:.:.:.:.:.:.:.:.:.:.")
  mT0=t2
  dcd(3,"*",0)
@@ -2406,6 +2939,10 @@ func cUI()
  dcd(14,"o",1)
  dcd(17,"*",0)
  dcd(21,"+",2)
+ dc(mP,1,28,1,2,21,"#3A4552","")
+ qxD=t2
+ dc(mP,1,30,1,27,21,"#0E1A2B","")
+ qxR=t2
  mTi=ui.AddText()
  tp(mTi,1,1,26,2)
  mTi.color=cH
@@ -2414,12 +2951,27 @@ func cUI()
  tp(G,1,2,26,2)
  G.color="#B8C4D0"
  mP.Add(G)
+ qxT=ui.AddText()
+ tp(qxT,1,1,26,2)
+ qxT.color=cH
+ mP.Add(qxT)
+ qxG=ui.AddText()
+ tp(qxG,1,2,26,2)
+ qxG.color="#B8C4D0"
+ mP.Add(qxG)
  for d=1..12
   t2=ui.AddButton()
   tl(t2)
   t2.SetPressed(mAc)
   mP.Add(t2)
   BT.Add(t2)
+ for d=1..12
+  t2=ui.AddButton()
+  tl(t2)
+  t2.SetPressed(qAc)
+  t2.visible=false
+  mP.Add(t2)
+  XB.Add(t2)
  ab=1
  sgO=0-1
  hpO=0-1
@@ -2429,6 +2981,7 @@ func cUI()
  thO=0-1
  prO=0-1
  tcO=0-1
+ qxL()
 func dcR(x,y,c,tx)
  >o@x@,@y@,#@c@,@tx@
 func Zaq(dy,c,tx)
@@ -2571,6 +3124,9 @@ func thm()
   mS2.color="#BFE9FF"
   mT0.color="#BFE9FF"
   dkL="#BFE9FF,#8793A3,#F1C40F"
+ ?qxOn=1
+  mB1.text=mB1.text+mB1.text
+  mB2.text=mB1.text
  dkA=string.Split(dkL,",")
  for dk2=0..DK.Count()-1
   dkI=DKC[dk2]
@@ -2692,6 +3248,7 @@ tk=totaltime
   tcO=tcN
   dkI=tcN*2
   mTi.color=dkA[dkI]
+  qxT.color=dkA[dkI]
  prt()
  ?pg=13&Zae>0&tk%10=0
   blk()
